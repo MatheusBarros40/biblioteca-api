@@ -25,7 +25,7 @@ public class Categoria implements Serializable {
     @EqualsAndHashCode.Include
     private Integer id;
     private String nome;
-    private String description;
+    private String descricao;
 
     @OneToMany(mappedBy = "categoria")
     private List<Livro> livros = new ArrayList<>();
@@ -35,11 +35,11 @@ public class Categoria implements Serializable {
         super();
     }
 
-    public Categoria(Integer id, String nome, String description) {
+    public Categoria(Integer id, String nome, String descricao) {
         super();
         this.id = id;
         this.nome = nome;
-        this.description = description;
+        this.descricao = descricao;
     }
 
 }
