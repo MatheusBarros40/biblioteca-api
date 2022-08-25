@@ -1,0 +1,38 @@
+version: "3"
+services:
+  springboot:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: springboot
+    networks:
+      - spring
+    ports:
+      - "8081:8081"
+      - "5005:5005"
+    volumes:
+      - "./springboot:/home/spring_curso"
+    environment:
+      - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+      - PROFILE=dev
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD:
+    networks:
+      - spring
+    ports:
+      - 33060:3306
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - spring
+networks:
+  spring:
+    driver: bridge
